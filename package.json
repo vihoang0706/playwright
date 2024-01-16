@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test --project \"Google Chrome\"",
+    "clean-report": "rimraf rimraf playwright/playwright-report/* playwright/test-results/*",
+    "test": "npx playwright test --headed --project \"Google Chrome\"",
+    "clean-run": "npm run clean-report && npm run test",
     "report": "npx playwright show-report"
   },
   "keywords": [],
@@ -17,5 +19,8 @@
     "@typescript-eslint/parser": "^6.18.1",
     "eslint": "^8.56.0",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "fs-extra": "^11.2.0"
   }
 }
