@@ -22,17 +22,7 @@ export default class LoginPage {
             await this.btnLogin.click();
         });
     }
-
-    async verifyErrorMessage(message: string) {
-        await test.step('Verify Error Message appears', async () => {
-            await this.page.on("dialog", async dialog => {
-                expect(dialog.type()).toContain('alert');
-                expect(dialog.message()).toEqual(message);
-                await dialog.accept().catch(() => { }); //why it got eror "dialog.accept: test end"
-            });
-        });
-    }
-
+    
     async displays(): Promise<void> {
         await test.step("Verify login page displays", async () => {
             await expect(this.txtUserName).toBeVisible();
