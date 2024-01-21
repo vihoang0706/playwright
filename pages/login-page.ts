@@ -20,6 +20,7 @@ export default class LoginPage {
             await this.txtUserName.fill(username);
             await this.txtPassword.fill(password);
             await this.btnLogin.click();
+            await this.page.waitForLoadState();
         });
     }
     

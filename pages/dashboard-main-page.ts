@@ -1,10 +1,9 @@
 import { test, expect, type Locator, type Page } from '@playwright/test';
 import * as util from 'util';
+import { BasePage } from './base-page';
 
-export default class DashboardMainPage {
+export default class DashboardMainPage extends BasePage {
     private readonly lblActiveMenuItem: Locator = this.page.locator('#main-menu li.active a.active');
-    private readonly lnkWelcomeAccount: Locator = this.page.locator('a[href="#Welcome"]');
-    private readonly lnkLogout: Locator = this.page.locator('a[href="logout.do"]');
     private readonly lnkGlobalSettings: Locator = this.page.locator('#main-menu .mn-setting > a');
     private readonly lnkAddPage: Locator = this.page.locator('//a[.="Add Page"]');
     private readonly lnkDelete: Locator = this.page.locator('#main-menu li a.delete');
@@ -16,7 +15,9 @@ export default class DashboardMainPage {
     private readonly lnkAdminister: Locator = this.page.locator('a[href="#Administer"]');
     private readonly lnkPanels: Locator = this.page.locator('#ulAdminister li a[href="panels.jsp"]');
 
-    constructor(private readonly page: Page) { };
+    constructor(readonly page: Page) {
+        super(page);
+    };
 
     async displays(): Promise<void> {
         await test.step('Verify Dashboard Mainpage appears', async () => {
@@ -72,7 +73,7 @@ export default class DashboardMainPage {
         });
     }
 
-    async deletePageAndGetMessage(pageName: string, parentPage?: string): Promise<string[]> {
+    async deletePageAndGetDialogMessage(pageName: string, parentPage?: string): Promise<string[]> {
         let dialogMessage: string[] = [];
 
         if (parentPage !== undefined && parentPage !== null) {
@@ -126,14 +127,6 @@ export default class DashboardMainPage {
             }
             await this.page.locator(util.format(this.dynamicPageSelector, pageName)).click();
             await this.page.waitForLoadState();
-        });
-    }
-
-    async logout(): Promise<void> {
-        await test.step('Logout', async () => {
-            await this.lnkWelcomeAccount.hover();
-            await this.lnkWelcomeAccount.click();
-            await this.lnkLogout.click();
         });
     }
 }
