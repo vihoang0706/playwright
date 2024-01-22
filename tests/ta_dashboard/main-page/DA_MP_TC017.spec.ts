@@ -2,9 +2,9 @@ import { test } from '@playwright/test';
 import DashboardMainPage from '../../../pages/dashboard-main-page';
 import LoginPage from '../../../pages/login-page';
 import NewPage from '../../../pages/new-page';
-import { Assertion } from '../../../utils/Assertion';
-import { CommonHelper } from '../../../utils/Common-helper';
-import Constants from '../../../utils/Constants';
+import Assertion from '../../../support/assertion';
+import Constants from '../../../support/constants';
+import CommonHelper from '../../../support/helpers/common-helper';
 
 test('DA_MP_TC017 - Verify that user can remove any main parent page except "Overview" page successfully and the order of pages stays persistent as long as there is not children page under it', async ({ page }) => {
     const pageParentName = "Parent" + CommonHelper.generateRandomNumber();
@@ -41,16 +41,16 @@ test('DA_MP_TC017 - Verify that user can remove any main parent page except "Ove
     //5. Delete child page, verify the messages show and check the child page is deleted
     const actConfirmMsgForChildPage: string[] = await dashboardMainPage.deletePageAndGetDialogMessage(pageChildName, pageParentName);
     Assertion.assertEqual(actConfirmMsgForChildPage, expConfirmRemoveMessage);
-    Assertion.assertTrue(await dashboardMainPage.doesParentHaveChildPages(pageParentName), "Parent has child pages");
+    Assertion.assertFalse(await dashboardMainPage.doesParentHaveChildPages(pageParentName), "Parent has child pages");
 
     //6. Delete parent page, verify the messages show and check the parent page is deleted
     const actConfirmMsgForParentPage: string[] = await dashboardMainPage.deletePageAndGetDialogMessage(pageParentName);
     Assertion.assertEqual(actConfirmMsgForParentPage, expConfirmRemoveMessage);
-    Assertion.assertTrue(await dashboardMainPage.doesPageExist(pageParentName), `Parent page ${pageParentName} is showing`);
+    Assertion.assertFalse(await dashboardMainPage.doesPageExist(pageParentName), `Parent page ${pageParentName} is showing`);
 
     //7. Click on "Overview" page
     await dashboardMainPage.clickOnPage(Constants.OVERVIEW_PAGE);
 
     //8. Check "Delete" link disappears
-    Assertion.assertTrue(await dashboardMainPage.isGlobalSettingOptionDisplayed("Delete"));
+    Assertion.assertFalse(await dashboardMainPage.isGlobalSettingOptionDisplayed("Delete"));
 });

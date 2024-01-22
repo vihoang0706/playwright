@@ -1,12 +1,11 @@
-import { TableHelper } from "../support/helpers/table-helper";
-import { BasePage } from "./base-page";
+import Table from "../support/elements/table";
+import BasePage from "./base-page";
 
 export class DataProfileDashboardPage extends BasePage {
-    private readonly lblDataProfileRowData = '//table[@class="GridView"]//tr/td[not(@class) and not(@colspan)]';
+    private readonly tblDataProfiles: Table = new Table(this.page.locator("table.GridView"));
 
-    async getPreSetDataProfile(): Promise<string[]> {
-        const tableHelper = new TableHelper(this.page);
-        const lstPreSetData = await tableHelper.getRowData(this.lblDataProfileRowData);
+    async getListOfPreSetDataProfile(): Promise<string[]> {
+        const lstPreSetData = await this.tblDataProfiles.getRowDataByColumnName("Data Profile");
         return lstPreSetData;
     }
 }

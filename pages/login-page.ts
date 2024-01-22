@@ -16,14 +16,14 @@ export default class LoginPage {
 
     async login(username: string, password: string, repo?: string): Promise<void> {
         await test.step("Login to repo with given credentials", async () => {
+            await this.btnLogin.waitFor();
             if (repo !== null && repo !== undefined) await this.cbbRepository.selectOption(repo);
             await this.txtUserName.fill(username);
             await this.txtPassword.fill(password);
             await this.btnLogin.click();
-            await this.page.waitForLoadState();
         });
     }
-    
+
     async displays(): Promise<void> {
         await test.step("Verify login page displays", async () => {
             await expect(this.txtUserName).toBeVisible();

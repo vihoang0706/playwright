@@ -1,4 +1,4 @@
-export default class PreSetDataProfile {
+export default class ProfileData {
     public static readonly lstExpPreSetDataProfile = [
         'Action Implementation By Status',
         'Functional Tests',

@@ -7,8 +7,7 @@
     "clean-report": "rimraf rimraf playwright/playwright-report/* playwright/test-results/*",
     "test": "npx playwright test --headed --project \"Google Chrome\"",
     "clean-run": "npm run clean-report && npm run test",
-    "report": "npx playwright show-report",
-    "run-specific-file": "npx playwright test main-page-test.spec.ts --headed"
+    "report": "npx playwright show-report"
   },
   "keywords": [],
   "author": "",

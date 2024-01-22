@@ -1,9 +1,10 @@
-import { expect, test } from '@playwright/test';
+import { test } from '@playwright/test';
 import DashboardMainPage from '../../../pages/dashboard-main-page';
 import { DataProfileDashboardPage } from '../../../pages/data-profile-dashboard-page';
 import LoginPage from '../../../pages/login-page';
+import Asssertion from '../../../support/assertion';
 import Constants from '../../../support/constants';
-import PreSetDataProfile from '../../../support/data/preset-data-profile';
+import ProfileData from '../../../support/data/profile-data';
 
 test("Verify that all Pre-set Data Profiles are populated correctly", async ({ page }) => {
     const loginPage = new LoginPage(page);
@@ -20,5 +21,6 @@ test("Verify that all Pre-set Data Profiles are populated correctly", async ({ p
     await dashboardMainPage.selectMenu("Administer>Data Profiles");
 
     //4. Verify Pre-set Data Profile are populated correctly in profiles page
-    expect(await dataProfileDashboardPage.getPreSetDataProfile()).toEqual(PreSetDataProfile.lstExpPreSetDataProfile);
+    Asssertion.assertEqual(await dataProfileDashboardPage.getListOfPreSetDataProfile(), ProfileData.lstExpPreSetDataProfile,
+        "The list pre-set data profile shows incorrectly");
 });
