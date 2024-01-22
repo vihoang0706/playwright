@@ -12,21 +12,29 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('DA_LOGIN_TC001 - Verify that user can login specific repository successfully via Dashboard login page with correct credentials', async ({ page }) => {
+  const dashboardMainPage = new DashboardMainPage(page);
+
+  //1. Login with valid account
   await loginPage.login(Constants.ADMIN_USERNAME, Constants.ADMIN_PASSWORD);
 
-  const dashboardMainPage = new DashboardMainPage(page);
+  //2. Verify that Dashboard Mainpage appears 
   await dashboardMainPage.displays();
+
+  //3. Logout
   await dashboardMainPage.logout();
 });
 
 test('DA_LOGIN_TC002 - Verify that user fails to login specific repository successfully via Dashboard login page with incorrect credentials', async ({ page }) => {
   const loginMessage = "Username or password is invalid";
 
+  //1. Login with incorrect credential
   await loginPage.login("abc", "abc");
 
+  //2. Verify that Dashboard Error message "Username or password is invalid" appears
   const dialog = new Dialog(page)
   await dialog.handleDialog();
   await dialog.verifyMessageDisplays(loginMessage);
   
+  //3. Verify login page is displaying
   await loginPage.displays();
 });
