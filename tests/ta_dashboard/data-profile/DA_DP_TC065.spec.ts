@@ -6,7 +6,7 @@ import Asssertion from '../../../support/assertion';
 import Constants from '../../../support/constants';
 import ProfileData from '../../../support/data/profile-data';
 
-test("Verify that all Pre-set Data Profiles are populated correctly", async ({ page }) => {
+test("DA_DP_TC065 - Verify that all Pre-set Data Profiles are populated correctly", async ({ page }) => {
     const loginPage = new LoginPage(page);
     const dashboardMainPage = new DashboardMainPage(page);
     const dataProfileDashboardPage = new DataProfileDashboardPage(page);

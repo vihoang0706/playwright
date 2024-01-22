@@ -6,12 +6,10 @@ import Constants from '../../../support/constants';
 import CommonHelper from '../../../support/helpers/common-helper';
 
 const pageParentName = "Parent" + CommonHelper.generateRandomNumber();
-let loginPage: LoginPage;
-let dashboardMainPage: DashboardMainPage;
 
 test('DA_MP_TC014 - Verify that "Public" pages can be visible and accessed by all users of working repository', async ({ page }) => {
-    loginPage = new LoginPage(page);
-    dashboardMainPage = new DashboardMainPage(page);
+    const loginPage = new LoginPage(page);
+    const dashboardMainPage = new DashboardMainPage(page);
     const newPage = new NewPage(page);
 
     //1.Navigate to Dashboard login page
@@ -30,7 +28,10 @@ test('DA_MP_TC014 - Verify that "Public" pages can be visible and accessed by al
     await dashboardMainPage.verifyNewPageAddedSuccessfully(pageParentName);
 });
 
-test.afterEach(async () => {
+test.afterEach(async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    const dashboardMainPage = new DashboardMainPage(page);
+    
     //Logout and login with created account to delete it
     await dashboardMainPage.logout();
     await loginPage.login(Constants.ADMIN_USERNAME, Constants.ADMIN_PASSWORD)

@@ -1,4 +1,4 @@
-import { test, type Locator, type Page } from '@playwright/test';
+import { type Locator, type Page } from '@playwright/test';
 import * as util from 'util';
 import Constants from '../support/constants';
 
@@ -13,16 +13,15 @@ export default abstract class BasePage {
         const menuItems: string[] = menuPath.split('>');
         for (let i = 0; i < menuItems.length; i++) {
             const lnkMenuOption: Locator = this.page.locator(util.format(this.lnkDynamicMenu, menuItems[i]));
+            await lnkMenuOption.waitFor();
             await lnkMenuOption.click();
         }
     }
 
     async logout(): Promise<void> {
-        await test.step('Logout', async () => {
-            await this.lnkWelcomeAccount.hover();
-            await this.lnkWelcomeAccount.click();
-            await this.lnkLogout.click();
-        });
+        await this.lnkWelcomeAccount.hover();
+        await this.lnkWelcomeAccount.click();
+        await this.lnkLogout.click();
     }
 
     /**

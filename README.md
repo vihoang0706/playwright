@@ -13,7 +13,7 @@
 
 + Run Playwight with specific spec, headed mode
 
-    `npx playwright test DA_DP_TC065.spec.ts --headed`
+    `npx playwright test DA_MP_TC014.spec.ts --headed`
 
 + Open report
 

@@ -12,14 +12,12 @@ export default class NewPage {
     constructor(private readonly page: Page) { }
 
     async submitAddNewPage(pageName: string, isPublic?: boolean, parentName?: string, numberOfColumns?: string, displayAfter?: string) {
-        await test.step('Add new page with given data', async () => {
-            await this.txtPageName.fill(pageName);
-            if (parentName !== null && parentName !== undefined) await this.cbbParentPage.selectOption(parentName);
-            if (numberOfColumns !== null && numberOfColumns !== undefined) await this.cbbNumberOfColumns.selectOption(numberOfColumns);
-            if (displayAfter !== null && displayAfter !== undefined) await this.cbbNAfterPage.selectOption(displayAfter);
-            if (isPublic !== null && isPublic !== undefined) await this.cbxAfterPage.check();
-            await this.btnOK.click();
-            await this.page.waitForLoadState();
-        });
+        await this.txtPageName.fill(pageName);
+        if (parentName !== null && parentName !== undefined) await this.cbbParentPage.selectOption(parentName);
+        if (numberOfColumns !== null && numberOfColumns !== undefined) await this.cbbNumberOfColumns.selectOption(numberOfColumns);
+        if (displayAfter !== null && displayAfter !== undefined) await this.cbbNAfterPage.selectOption(displayAfter);
+        if (isPublic !== null && isPublic !== undefined) await this.cbxAfterPage.check();
+        await this.btnOK.click();
+        await this.page.waitForLoadState();
     }
 }
