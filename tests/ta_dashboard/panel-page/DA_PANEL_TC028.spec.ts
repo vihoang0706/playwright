@@ -2,8 +2,8 @@ import { test } from '@playwright/test';
 import DashboardMainPage from '../../../pages/dashboard-main-page';
 import LoginPage from '../../../pages/login-page';
 import PanelDashboadPage from '../../../pages/panel-dashboard-page';
-import { Assertion } from '../../../support/assertion';
 import Constants from '../../../support/constants';
+import Assertion from '../../../support/assertion';
 
 test('DA_PANEL_TC028 - Verify that when "Add New Panel" form is on focused all other control/form is disabled or locked.', async ({ page }) => {
     const loginPage = new LoginPage(page);

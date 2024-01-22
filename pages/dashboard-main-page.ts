@@ -1,6 +1,6 @@
-import { test, expect, type Locator, type Page } from '@playwright/test';
+import { expect, test, type Locator } from '@playwright/test';
 import * as util from 'util';
-import { BasePage } from './base-page';
+import BasePage from './base-page';
 
 export default class DashboardMainPage extends BasePage {
     private readonly lblActiveMenuItem: Locator = this.page.locator('#main-menu li.active a.active');
@@ -14,10 +14,6 @@ export default class DashboardMainPage extends BasePage {
     private readonly dynamicGlobalSettingsOption = '//div[@id="main-menu"]//li[@class="mn-setting"]//a[text()="%s"]';
     private readonly lnkAdminister: Locator = this.page.locator('a[href="#Administer"]');
     private readonly lnkPanels: Locator = this.page.locator('#ulAdminister li a[href="panels.jsp"]');
-
-    constructor(readonly page: Page) {
-        super(page);
-    };
 
     async displays(): Promise<void> {
         await test.step('Verify Dashboard Mainpage appears', async () => {
@@ -46,14 +42,7 @@ export default class DashboardMainPage extends BasePage {
 
     async deletePage(pageName: string, parentPage?: string): Promise<void> {
         test.step("Delete page", async () => {
-            if (parentPage !== undefined && parentPage !== null) {
-                const lnkParentPage = this.page.locator(util.format(this.dynamicPageSelector, parentPage));
-                const lnkActivePage = this.page.locator(util.format(this.dynamicActivePageSelector, parentPage));
-                await lnkParentPage.click();
-                await lnkActivePage.waitFor();
-                await lnkParentPage.hover();
-            }
-            await this.page.locator(util.format(this.dynamicPageSelector, pageName)).click();
+            (parentPage !== undefined && parentPage !== null) ? await this.clickOnPage(pageName, parentPage) : await this.clickOnPage(pageName);
             const hasChildPage = await this.doesParentHaveChildPages(pageName);
             await this.lnkGlobalSettings.click();
 
@@ -104,7 +93,8 @@ export default class DashboardMainPage extends BasePage {
     }
 
     async doesParentHaveChildPages(parent: string): Promise<boolean> {
-        return await this.page.locator(util.format(this.dynamicChildSelector, parent)).isVisible();
+        const locator: Locator = await this.page.locator(util.format(this.dynamicChildSelector, parent));
+        return await locator.isVisible();
     }
 
     async doesPageExist(page: string): Promise<boolean> {
