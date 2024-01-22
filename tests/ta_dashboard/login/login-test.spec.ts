@@ -1,8 +1,8 @@
 import { test } from '@playwright/test';
 import DashboardMainPage from '../../../pages/dashboard-main-page';
 import LoginPage from '../../../pages/login-page';
-import Constants from '../../../utils/Constants';
 import Dialog from '../../../pages/dialog';
+import Constants from '../../../support/constants';
 
 let loginPage: LoginPage;
 

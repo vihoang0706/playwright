@@ -1,9 +1,9 @@
 import { test } from '@playwright/test';
-import LoginPage from '../../../pages/login-page';
 import DashboardMainPage from '../../../pages/dashboard-main-page';
-import Constants from '../../../utils/constants';
+import LoginPage from '../../../pages/login-page';
 import PanelDashboadPage from '../../../pages/panel-dashboard-page';
-import { Assertion } from '../../../utils/assertion';
+import { Assertion } from '../../../support/assertion';
+import Constants from '../../../support/constants';
 
 test('DA_PANEL_TC028 - Verify that when "Add New Panel" form is on focused all other control/form is disabled or locked.', async ({ page }) => {
     const loginPage = new LoginPage(page);
@@ -23,7 +23,7 @@ test('DA_PANEL_TC028 - Verify that when "Add New Panel" form is on focused all o
     await panelDashboardPage.openAddNewPanel();
 
     //5. Verify Add New Panel dialog is opening
-    Assertion.assertTrue(await panelDashboardPage.isAddNewPanelFormDisplayed(), "Add New Panel dialog is not openning");
+    Assertion.assertTrue(await panelDashboardPage.isAddNewPanelFormDisplayed(), "New Panel Dialog is not opening");
 
     //Verify all controls/form are disabled or locked
     await panelDashboardPage.verifyControlsAreDisabled();

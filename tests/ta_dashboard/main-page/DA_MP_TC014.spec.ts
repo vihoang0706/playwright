@@ -2,8 +2,8 @@ import { test } from '@playwright/test';
 import DashboardMainPage from '../../../pages/dashboard-main-page';
 import LoginPage from '../../../pages/login-page';
 import NewPage from '../../../pages/new-page';
-import { CommonHelper } from '../../../utils/Common-helper';
-import Constants from '../../../utils/Constants';
+import Constants from '../../../support/constants';
+import CommonHelper from '../../../support/helpers/common-helper';
 
 const pageParentName = "Parent" + CommonHelper.generateRandomNumber();
 let loginPage: LoginPage;

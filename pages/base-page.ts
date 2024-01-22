@@ -10,14 +10,13 @@ export abstract class BasePage {
 
     constructor(readonly page: Page) { }
 
-    async selectMenu1(menuPath: string) {
+    async selectMenu(menuPath: string) {
         test.step(`Select ${menuPath}`, async () => {
             let dynamicMenu: Locator;
             let dynamicSubMenu: Locator
 
             const menuItems: string[] = menuPath.split(">");
             dynamicMenu = this.page.locator(util.format(this.lnkDynamicMenu, menuItems[0]));
-            console.log(menuItems[0]);
             await dynamicMenu.hover();
             await dynamicMenu.click();
             if (menuItems.length == 2) {
@@ -27,16 +26,6 @@ export abstract class BasePage {
                 await this.page.waitForLoadState();
             }
         });
-    }
-
-    async selectMenu(menuPath: string): Promise<void> {
-        let lnkMenuOption: Locator;
-        const menuItems: string[] = menuPath.split('>');
-        for (let i = 0; i < menuItems.length; i++) {
-            lnkMenuOption = this.page.locator(util.format(this.lnkDynamicMenu, menuItems[i]));
-            await lnkMenuOption.hover();
-            await lnkMenuOption.click();
-        }
     }
 
     async logout(): Promise<void> {

@@ -1,4 +1,4 @@
-import { expect, type Locator, type Page } from '@playwright/test';
+import { expect, type Locator } from '@playwright/test';
 import { BasePage } from './base-page';
 
 export default class PanelDashboadPage extends BasePage {
@@ -10,6 +10,7 @@ export default class PanelDashboadPage extends BasePage {
     }
 
     async isAddNewPanelFormDisplayed(): Promise<boolean> {
+        await this.lblDialogTitle.waitFor();
         return await this.lblDialogTitle.isVisible();
     }
 
