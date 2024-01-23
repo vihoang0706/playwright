@@ -1,20 +1,31 @@
+This is the automation framework implemented by QA engineer, it is created to get familiar with playwright language for training purposes.
+
+Please spend time reading the https://playwright.dev/docs/best-practices before working.
+
+# Install Dependences
+`npm install`
+
 # Getting started
-+ Install dependencies
++ Run all the tests paralel
 
-    `npm install`
+    `npx playwright test`
 
-+ Run all tests with specific browser (i/e: Chrome)
++ Run all the tests paralel against a specific project
 
-    `npm run`
+    `npx playwright test --project=\"Google Chrome\"`
 
-+ Run test automatically and then open with Allure report
++ Run tests with specific test
 
-    `npm run clean-run`
+    `npx playwright test DA_LOGIN_TC001.spec.ts`
 
-+ Run Playwight with specific spec, headed mode
++ Run tests with only 1 worker
 
-    `npx playwright test DA_MP_TC014.spec.ts --headed`
+`npx playwright test --headed --project \"Google Chrome\" --workers=1`
 
-+ Open report
+# View report
++ View default HTML report via command
 
-    `npm run report`    
+    `npx playwright show-report`
+
++ Installed Plugin in Visual Code
+    1. Playwright Test for VS Code

@@ -11,6 +11,11 @@ export default class Table {
         return await this.element.locator('tbody > tr > th').count() > 0;
     }
 
+    /**
+     * Get list of row data of a specific Column Name
+     * @param collumnName - column name
+     * @returns list of data
+     */
     async getRowDataByColumnName(collumnName: string): Promise<string[]> {
         let numberOfRows = (await this.element.locator('tr').count());
         let startRowIdx = 1;
@@ -30,6 +35,11 @@ export default class Table {
         return lstRowData;
     }
 
+    /**
+     * Get column index of a specific column name header
+     * @param columnHeader 
+     * @returns - column index
+     */
     async getColumnIndexByColumnHeader(columnHeader: string): Promise<number> {
         let columnIdx;
         const headerSelector = 'tbody > tr > th';

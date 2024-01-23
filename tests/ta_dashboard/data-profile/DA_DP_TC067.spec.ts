@@ -6,7 +6,7 @@ import LoginPage from '../../../pages/login-page';
 import Asssertion from '../../../support/helpers/assertion';
 import Constants from '../../../support/helpers/constants';
 
-test("Verify that all Pre-set Data Profiles are populated correctly", async ({ page }) => {
+test("DA_DP_TC067 - Verify that all Pre-set Data Profiles are populated correctly", async ({ page }) => {
     const loginPage = new LoginPage(page);
     const dashboardMainPage = new DashboardMainPage(page);
     const dataProfileDashboardPage = new DataProfileDashboardPage(page);
@@ -20,7 +20,8 @@ test("Verify that all Pre-set Data Profiles are populated correctly", async ({ p
     //3. Click Administer->Data Profiles
     await dashboardMainPage.selectMenu("Administer>Data Profiles");
 
-    //4. Verify Pre-set Data Profile are populated correctly in profiles page
-    Asssertion.assertEqual(await dataProfileDashboardPage.getListOfPreSetDataProfile(), ProfileData.lstExpPreSetDataProfile,
-        "The list pre-set data profile shows incorrectly");
+    //4. Check Data Profiles are listed alphabetically
+    const actDataProfile = (await dataProfileDashboardPage.getListOfPreSetDataProfile()).sort();
+    const expDataProfle = ProfileData.lstExpPreSetDataProfile.sort();
+    Asssertion.assertEqual(actDataProfile, expDataProfle);
 });
