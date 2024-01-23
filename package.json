@@ -5,10 +5,9 @@
   "main": "index.js",
   "scripts": {
     "clean-report": "rimraf rimraf playwright/playwright-report/* playwright/test-results/*",
-    "test": "npx playwright test --headed --project \"Google Chrome\"",
+    "test": "npx playwright test --headed --project \"Google Chrome\" --workers=1 && npm run report",
     "clean-run": "npm run clean-report && npm run test",
-    "report": "npx playwright show-report",
-    "spc": "npx playwright test DA_DP_TC065.spec.ts --headed"
+    "report": "npx playwright show-report"
   },
   "keywords": [],
   "author": "",

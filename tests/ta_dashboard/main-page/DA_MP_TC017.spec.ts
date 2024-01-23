@@ -2,9 +2,9 @@ import { test } from '@playwright/test';
 import DashboardMainPage from '../../../pages/dashboard-main-page';
 import LoginPage from '../../../pages/login-page';
 import NewPage from '../../../pages/new-page';
-import Assertion from '../../../support/assertion';
-import Constants from '../../../support/constants';
+import Assertion from '../../../support/helpers/assertion';
 import CommonHelper from '../../../support/helpers/common-helper';
+import Constants from '../../../support/helpers/constants';
 
 test('DA_MP_TC017 - Verify that user can remove any main parent page except "Overview" page successfully and the order of pages stays persistent as long as there is not children page under it', async ({ page }) => {
     const pageParentName = "Parent" + CommonHelper.generateRandomNumber();
@@ -24,15 +24,15 @@ test('DA_MP_TC017 - Verify that user can remove any main parent page except "Ove
     await loginPage.open();
 
     //2. Log in specific repository with valid account
-    await loginPage.login(Constants.ADMIN_USERNAME, Constants.ADMIN_PASSWORD, Constants.SAMPLE_REPOSITORY)
+    await loginPage.login(Constants.ADMIN_USERNAME, Constants.PASSWORD, Constants.SAMPLE_REPOSITORY)
 
     //3. Add a new parent page
     await dashboardMainPage.openAddNewPage();
-    await newPage.submitAddNewPage(pageParentName, true);
+    await newPage.addNewPage({ pageName: pageParentName });
 
     //4. Add a children page of newly added page
     await dashboardMainPage.openAddNewPage();
-    await newPage.submitAddNewPage(pageChildName, true, pageParentName);
+    await newPage.addNewPage({ pageName: pageChildName, parentPage: pageParentName, public: true });
 
     //5. Delete parent page and verify the messages show
     const lstActualMsg: string[] = await dashboardMainPage.deletePageAndGetDialogMessage(pageParentName);
@@ -41,16 +41,16 @@ test('DA_MP_TC017 - Verify that user can remove any main parent page except "Ove
     //5. Delete child page, verify the messages show and check the child page is deleted
     const actConfirmMsgForChildPage: string[] = await dashboardMainPage.deletePageAndGetDialogMessage(pageChildName, pageParentName);
     Assertion.assertEqual(actConfirmMsgForChildPage, expConfirmRemoveMessage);
-    Assertion.assertFalse(await dashboardMainPage.doesParentHaveChildPages(pageParentName), "Parent has child pages");
+    await dashboardMainPage.verifyPageDeleted(pageChildName);
 
     //6. Delete parent page, verify the messages show and check the parent page is deleted
     const actConfirmMsgForParentPage: string[] = await dashboardMainPage.deletePageAndGetDialogMessage(pageParentName);
     Assertion.assertEqual(actConfirmMsgForParentPage, expConfirmRemoveMessage);
-    Assertion.assertFalse(await dashboardMainPage.doesPageExist(pageParentName), `Parent page ${pageParentName} is showing`);
+    await dashboardMainPage.verifyPageDeleted(pageParentName);
 
     //7. Click on "Overview" page
     await dashboardMainPage.clickOnPage(Constants.OVERVIEW_PAGE);
 
     //8. Check "Delete" link disappears
-    Assertion.assertFalse(await dashboardMainPage.isGlobalSettingOptionDisplayed("Delete"));
+    await dashboardMainPage.verifyGlobalSettingOptionDisappears("Delete");
 });
