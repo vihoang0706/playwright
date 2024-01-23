@@ -15,7 +15,7 @@ test('DA_PANEL_TC028 - Verify that when "Add New Panel" form is on focused all o
     //2. Log in specific repository with valid account
     await loginPage.login(Constants.ADMIN_USERNAME, Constants.ADMIN_PASSWORD);
 
-    //3. Click on Administer link -> Click Panel link
+    //3. Click on Administer link -> Click Panels link
     await dashboardMainPage.selectMenu("Administer>Panels");
 
     //4. Click Add New link
