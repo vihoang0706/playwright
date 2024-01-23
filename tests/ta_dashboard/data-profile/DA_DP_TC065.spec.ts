@@ -1,10 +1,10 @@
 import { test } from '@playwright/test';
+import ProfileData from '../../../data/profile-data';
 import DashboardMainPage from '../../../pages/dashboard-main-page';
 import { DataProfileDashboardPage } from '../../../pages/data-profile-dashboard-page';
 import LoginPage from '../../../pages/login-page';
-import Asssertion from '../../../support/assertion';
-import Constants from '../../../support/constants';
-import ProfileData from '../../../support/data/profile-data';
+import Asssertion from '../../../support/helpers/assertion';
+import Constants from '../../../support/helpers/constants';
 
 test("Verify that all Pre-set Data Profiles are populated correctly", async ({ page }) => {
     const loginPage = new LoginPage(page);

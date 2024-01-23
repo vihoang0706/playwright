@@ -1,20 +1,27 @@
 import { test, type Locator, type Page } from '@playwright/test';
 import * as util from 'util';
-import Constants from '../support/constants';
+import Constants from '../support/helpers/constants';
 
 export default abstract class BasePage {
     private readonly lnkWelcomeAccount: Locator = this.page.locator('a[href="#Welcome"]');
     private readonly lnkLogout: Locator = this.page.locator('a[href="logout.do"]');
-    private readonly lnkDynamicMenu = '//ul[@class="head-menu"]//a[text()="%s"]';
+    private readonly lnkDynamicMenu: string = '//ul[@class="head-menu"]//a[text()="%s"]';
+    private readonly linkDynamicSubMenu: string = '//ul[@class="head-menu"]//a[text()="%s"]/..//li/a[text()="%s"]';
 
     constructor(readonly page: Page) { }
 
     async selectMenu(menuPath: string): Promise<void> {
-        const menuItems: string[] = menuPath.split('>');
-        for (let i = 0; i < menuItems.length; i++) {
-            const lnkMenuOption: Locator = this.page.locator(util.format(this.lnkDynamicMenu, menuItems[i]));
-            await lnkMenuOption.click();
-        }
+        await test.step(`Select ${menuPath}`, async () => {
+            const menuItems: string[] = menuPath.split(">");
+            const dynamicMenu: Locator = this.page.locator(util.format(this.lnkDynamicMenu, menuItems[0]));
+            await dynamicMenu.click();
+            if (menuItems.length == 2) {
+                const dynamicSubMenu: Locator = this.page.locator(util.format(this.linkDynamicSubMenu, menuItems[0].trim(), menuItems[1]));
+                await dynamicSubMenu.hover();
+                await dynamicSubMenu.click();
+                await this.page.waitForLoadState();
+            }
+        });
     }
 
     async logout(): Promise<void> {

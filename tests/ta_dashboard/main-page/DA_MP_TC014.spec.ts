@@ -2,8 +2,8 @@ import { test } from '@playwright/test';
 import DashboardMainPage from '../../../pages/dashboard-main-page';
 import LoginPage from '../../../pages/login-page';
 import NewPage from '../../../pages/new-page';
-import Constants from '../../../support/constants';
 import CommonHelper from '../../../support/helpers/common-helper';
+import Constants from '../../../support/helpers/constants';
 
 const pageParentName = "Parent" + CommonHelper.generateRandomNumber();
 let loginPage: LoginPage;
@@ -22,7 +22,7 @@ test('DA_MP_TC014 - Verify that "Public" pages can be visible and accessed by al
 
     //3. Add a new parent page
     await dashboardMainPage.openAddNewPage();
-    await newPage.submitAddNewPage(pageParentName, true);
+    await newPage.addNewPage({ pageName: pageParentName });
 
     //4. Login with another user and check the page added successfully
     await dashboardMainPage.logout();
