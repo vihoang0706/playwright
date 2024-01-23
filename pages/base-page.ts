@@ -34,7 +34,7 @@ export default abstract class BasePage {
 
     /**
  * Checks if an element with the given locator is clickable within the specified timeout.
- * @param strLocator - The locator string for the element.
+ * @param strLocator - The locator string for the element
  * @param timeout - Optional timeout for the click operation.
  * @returns True if the element is clickable, false otherwise.
  */
